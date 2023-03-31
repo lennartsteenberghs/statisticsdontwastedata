@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm i",
+    "start": "node index.js"
+  },
   "type": "module",
   "dependencies": {
     "cors": "^2.8.5",
