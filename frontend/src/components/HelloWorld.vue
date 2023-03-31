@@ -12,7 +12,7 @@ export default {
   methods: {
     async downloadWasteData() {
       try {
-        const res = await fetch('/api/download-waste-data');
+        const res = await fetch('https://statisticsdontwastedata-backend.onrender.com/download-waste-data');
         const blob = await res.blob();
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -27,7 +27,7 @@ export default {
 
     async downloadMetalAndPlasticStats() {
       try {
-        const res = await fetch('http://localhost:3000/download-metal-and-plastic-stats');
+        const res = await fetch('https://statisticsdontwastedata-backend.onrender.com/download-metal-and-plastic-stats');
         const blob = await res.blob();
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
