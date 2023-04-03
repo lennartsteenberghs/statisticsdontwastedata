@@ -13,3 +13,8 @@ export async function getMetalWeekly(){
   return metal[0];
 }
 
+export async function getWastedata(){
+  const waste = await MYSQL_pool.query("SELECT w_time as time, type_waste.name as type, amount, id_bin as binnr, CONCAT('https://data-waste-collection-app-backend.onrender.com/getphoto/',id_photo) as photo_link FROM waste INNER JOIN type_waste ON waste.id_type=type_waste.id_type ORDER BY w_time")
+  return waste[0];
+}
+
