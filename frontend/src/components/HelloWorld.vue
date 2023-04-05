@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding: 10px">
     <div>
       <h1>Get Waste Data</h1>
       <button style="margin: 5px" @click="downloadWasteData">Download Waste Data</button>
@@ -62,8 +62,6 @@ export default {
       }
     };
 
-    const downloadTranslationsExcel = async () => {};
-
     const uploadTranslationsExcel = async () => {
       let token = process.env.VUE_APP_GITHUB_TOKEN;
       let file = selectedFile.value;
@@ -72,7 +70,7 @@ export default {
       console.log(content);
       uploadFileApi(token, content);
     };
-    
+
     const uploadFileApi = (token, content) => {
       const data = JSON.stringify({
         message: "txt file",
@@ -91,6 +89,38 @@ export default {
       fetch(process.env.VUE_APP_GITHUB_LINK, requestOptions)
         .then((response) => response.json())
         .then((data) => console.log(JSON.stringify(data)))
+        .catch((error) => console.log(error));
+    };
+
+    const downloadTranslationsExcel = async () => {
+      const file = await getFileApi(process.env.VUE_APP_GITHUB_TOKEN, process.env.VUE_APP_GITHUB_LINK);
+      const url = URL.createObjectURL(file);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = this.filepath;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+
+    const getFileApi = (token, filepath) => {
+      const requestOptions = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      };
+
+      return fetch(
+        `${process.env.VUE_APP_GITHUB_LINK}/contents/${filepath}`,
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          const content = atob(data.content);
+          return new Blob([content], { type: data.encoding });
+        })
         .catch((error) => console.log(error));
     };
 
