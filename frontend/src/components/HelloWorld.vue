@@ -8,7 +8,7 @@
         Download Metal and Plastic Statistics
       </button>
     </div>
-    <div>
+    <!-- <div>
       <h1>Change Waste Items / translations</h1>
       <button style="margin: 5px" @click="downloadTranslationsExcel">
         Download Waste Data
@@ -18,7 +18,7 @@
         <input type="file" ref="fileInputRef" @change="handleFileInputChange" />
         <button @click="uploadTranslationsExcel">Upload</button>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
