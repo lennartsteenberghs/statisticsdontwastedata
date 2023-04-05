@@ -9,7 +9,7 @@
       </button>
     </div>
     <div>
-      <h1>Change Waste Data / translations</h1>
+      <h1>Change Waste Items / translations</h1>
       <button style="margin: 5px" @click="downloadTranslationsExcel">
         Download Waste Data
       </button>
@@ -72,30 +72,26 @@ export default {
       console.log(content);
       uploadFileApi(token, content);
     };
-
+    
     const uploadFileApi = (token, content) => {
-      var data = JSON.stringify({
+      const data = JSON.stringify({
         message: "txt file",
         content: `${content}`,
       });
 
-      var config = {
-        method: "put",
-        url: process.env.VUE_APP_GITHUB_LINK,
+      const requestOptions = {
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        data: data,
+        body: data,
       };
 
-      axios(config)
-        .then(function (response) {
-          console.log(JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      fetch(process.env.VUE_APP_GITHUB_LINK, requestOptions)
+        .then((response) => response.json())
+        .then((data) => console.log(JSON.stringify(data)))
+        .catch((error) => console.log(error));
     };
 
     const handleFileInputChange = () => {
